@@ -5,7 +5,16 @@
  * 2023 Yale SWE 
  */
 
-/* ---------------------------------- flags --------------------------------- */
+/* ------------------------------- Github PAT ------------------------------- */
+
+variable "scoped_github_pat" {
+  description = "The GitHub personal access token to use for updating repo secrets."
+  type        = string
+  sensitive   = true
+  nullable    = false
+}
+
+/* ---------------------------- Cloudflare things --------------------------- */
 
 variable "cloudflare_account_id" {
   description = "The CloudFlare account to create resources under."

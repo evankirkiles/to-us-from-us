@@ -26,7 +26,10 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
-provider "github" {}
+provider "github" {
+  owner = "evankirkiles"
+  token = var.scoped_github_pat
+}
 
 locals {
   prod_hostname = var.cloudflare_domain

@@ -1,7 +1,7 @@
 name: "Deploy Pipeline"
 
 on:
-  # push:
+  push:
   workflow_dispatch:
 
 env:
@@ -25,6 +25,7 @@ jobs:
       TF_VAR_sanity_studio_project_id: ${{ vars.SANITY_STUDIO_PROJECT_ID }}
       TF_VAR_sanity_studio_dataset: ${{ vars.SANITY_STUDIO_DATASET }}
       TF_VAR_sanity_studio_api_version: ${{ vars.SANITY_STUDIO_API_VERSION }}
+      TF_VAR_github_pat: ${{ secrets.GITHUB_PAT}}
     outputs:
       CF_PROJ_NAME_PROD: ${{ steps.output.outputs.cf_proj_name_prod }}
       CF_PROJ_NAME_PREVIEW: ${{ steps.output.outputs.cf_proj_name_preview }}

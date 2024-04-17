@@ -12,7 +12,8 @@
     "astro": "astro",
     "typecheck": "tsc --noEmit",
     "codegen": "sanity-codegen",
-    "lint": "prettier --write ."
+    "lint": "prettier --write .",
+    "secrets": "cd tf; terraform output -raw env_local > ../.env.local"
   },
   "dependencies": {
     "@astrojs/check": "^0.5.10",

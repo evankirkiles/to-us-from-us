@@ -17,3 +17,12 @@ output "admin_url" {
 output "cf_zone_id" {
   value = data.cloudflare_zone.main.zone_id
 }
+
+output "env_local" {
+  sensitive = true
+  value = join("\n", flatten([
+    [for key, value in local.gh_variables : "${key}=${value}"],
+    [for key, value in local.preview_env_variables : "${key}=${value}"],
+    [for key, value in local.preview_secrets : "${key}=${value}"]
+  ]))
+}
