@@ -1,0 +1,19 @@
+:root {
+  // page properties
+  --clr-bg: #000000;
+  --clr-fg: #ffffff;
+  --clr-brdr: #ffffff;
+  --clr-fg2: #606060;
+  --clr-hl: pink;
+
+  // font families
+  --font-serif: "Century", "Times New Roman", serif;
+  --font-swash: "Altesse STD", sans-serif;
+
+  // page sizings
+  --page-padding: 1rem;
+  --width: 58rem; // (80ch, but not em-based)
+
+  // borders
+  --border: 1px solid var(--clr-fg);
+}

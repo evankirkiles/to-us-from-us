@@ -1,0 +1,29 @@
+div[data-ui="NextStudioLayout"] {
+  overflow: clip !important;
+
+  @media screen and (max-width: 615px) {
+    overflow: unset !important;
+  }
+}
+
+h1 {
+  font-family: "Gaya" !important;
+}
+
+// Kind of stupid overrides to get Sanity's dashboard to size correctly
+div[data-ui="Grid"][data-width="auto"] {
+  grid-auto-rows: calc(0.5 * (100vh - 120px));
+
+  & > div[data-ui="Card"] {
+    & > div[data-ui="Card"] {
+      & > div[data-ui="Card"] {
+        flex-shrink: 0;
+      }
+      & > div[data-ui="Box"] {
+        flex: 1;
+        padding: 0.5em;
+        min-height: 0;
+      }
+    }
+  }
+}
