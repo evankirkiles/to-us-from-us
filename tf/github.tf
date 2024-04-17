@@ -12,13 +12,13 @@ locals {
     "SANITY_PREVIEW_SECRET" = var.sanity_preview_secret
     "SANITY_API_READ_TOKEN" = var.sanity_api_read_token
     "CLOUDFLARE_API_TOKEN"  = var.cloudflare_api_token
-    "CLOUDFLARE_DOMAIN"     = var.cloudflare_domain
     "SCOPED_GITHUB_PAT"     = var.scoped_github_pat
   }
 
   gh_variables = {
     "CLOUDFLARE_ACCOUNT_ID"          = var.cloudflare_account_id
     "CLOUDFLARE_PROJECT_NAME_PREFIX" = var.cloudflare_project_name_prefix
+    "CLOUDFLARE_DOMAIN"              = var.cloudflare_domain
     "SANITY_STUDIO_PROJECT_ID"       = var.sanity_studio_project_id
     "SANITY_STUDIO_DATASET"          = var.sanity_studio_dataset
     "SANITY_STUDIO_API_VERSION"      = var.sanity_studio_api_version
