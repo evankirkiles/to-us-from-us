@@ -12,6 +12,7 @@ locals {
     "SANITY_PREVIEW_SECRET" = var.sanity_preview_secret
     "SANITY_API_READ_TOKEN" = var.sanity_api_read_token
     "CLOUDFLARE_API_TOKEN"  = var.cloudflare_api_token
+    "CLOUDFLARE_DOMAIN"     = var.cloudflare_domain
     "SCOPED_GITHUB_PAT"     = var.scoped_github_pat
   }
 
