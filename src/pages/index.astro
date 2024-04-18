@@ -10,7 +10,7 @@ import cn from "classnames";
     <div class="spheres">
       <h1>To Us, From Us.<br /><span>(M+E)</span></h1>
       <Icon name="Circles" />
-      <a href="https://admin.tousfrom.us/admin">Add</a>
+      <a href="https://admin.tousfrom.us/admin">↔ Add ↔</a>
     </div>
     <div class="about">
       <p
@@ -24,7 +24,7 @@ import cn from "classnames";
           new Array(6).fill(undefined).map((_, i) => (
             <li class={cn("year", i > 4 && "future")}>
               <h2 class="year_title">
-                {i > 4 ? "202" + i : <a href={`/year/202${i}`}>202{i}</a>}
+                {i > 4 ? "202" + i : <a href={`/years/202${i}`}>202{i}</a>}
               </h2>
               <div role="presentation" class="timeline" />
               <div class="year_description">
@@ -68,6 +68,7 @@ import cn from "classnames";
     justify-content: center;
     align-items: center;
     gap: 1rem;
+    text-align: center;
 
     & > h1 {
       line-height: 1.3;

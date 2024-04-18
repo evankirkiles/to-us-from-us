@@ -7,7 +7,7 @@ const { id } = Astro.params;
 ---
 
 <RootLayout>
-  <nav><a href="/">← Back Home</a></nav>
+  <nav><a href="/">↑ Home</a></nav>
   <article>
     <hgroup class="overview">
       <h1>{id}</h1>
@@ -19,7 +19,20 @@ const { id } = Astro.params;
     <section class="rooms scrollie no-scrollbar">
       <h2 class="sr-only">Rooms</h2>
       <ul>
-        {new Array(3).fill(undefined).map((_, i) => <li class="room" />)}
+        {
+          new Array(3).fill(undefined).map((_, i) => (
+            <li class="room">
+              <figure>
+                <div class="room_image" />
+                <figcaption>
+                  <p>
+                    <a href="/rooms/1">The Apartment</a>
+                  </p>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
       </ul>
     </section>
     <section class="images">
@@ -120,8 +133,6 @@ const { id } = Astro.params;
   }
 
   .rooms {
-    block-size: min(80vw, 40vh);
-
     & > ul {
       display: flex;
       gap: 1rem;
@@ -148,11 +159,39 @@ const { id } = Astro.params;
 
   .room {
     flex-shrink: 0;
-    border-radius: 100%;
-    background-color: var(--clr-fg);
-    aspect-ratio: 1;
-    inline-size: auto;
     block-size: 100%;
+
+    & > figure {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding-block-end: 0.5rem;
+
+      & > figcaption {
+        text-align: center;
+
+        & a::after {
+          position: absolute;
+          z-index: 1;
+          inset: 0;
+          inline-size: 100%;
+          block-size: 100%;
+          content: "";
+        }
+      }
+    }
+
+    &_image {
+      border-radius: 100%;
+      background-color: var(--clr-fg);
+      aspect-ratio: 1;
+      inline-size: min(80vw, 40vh);
+      inline-size: auto;
+      block-size: min(80vw, 40vh);
+    }
   }
 
   .memories {

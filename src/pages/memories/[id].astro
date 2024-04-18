@@ -1,0 +1,81 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+
+interface Props {}
+
+const { id } = Astro.params;
+---
+
+<RootLayout>
+  <nav><a href="/">↑ Home</a> <a href="/memories">↙ All Memories</a></nav>
+  <article>
+    <div class="hero">
+      <div class="memory">
+        <p
+          >Lorem ipsum dolor sit amet consectetur. Lectus malesuada at tincidunt
+          praesent. Pellentesque ultrices faucibus cras nunc augue egestas.</p
+        >
+      </div>
+      <a href="/memories/2" class="prev">←</a>
+      <a href="/memories/2" class="next">→</a>
+    </div>
+  </article>
+</RootLayout>
+
+<style lang="scss">
+  article {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--page-padding);
+  }
+
+  .hero {
+    display: grid;
+    grid-template:
+      ". . . ." 1fr
+      ". memory memory ." auto
+      ". prev next ." 1fr / 1fr 15ch 15ch 1fr;
+    flex: 1;
+    gap: var(--page-padding);
+    min-block-size: calc(100vh - 2 * var(--page-padding));
+
+    @media screen and (min-width: 1440px) {
+      grid-template:
+        ". . . . ." 1fr
+        ". prev memory next  ." auto
+        ". . . . ." 1fr / 1fr auto 40ch auto 1fr;
+    }
+  }
+
+  .prev {
+    grid-area: prev;
+    align-self: flex-end;
+    justify-self: flex-start;
+
+    @media screen and (min-width: 1440px) {
+      align-self: center;
+    }
+  }
+
+  .next {
+    grid-area: next;
+    align-self: flex-end;
+    justify-self: flex-end;
+
+    @media screen and (min-width: 1440px) {
+      align-self: center;
+    }
+  }
+
+  .memory {
+    grid-area: memory;
+  }
+
+  nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: var(--page-padding);
+  }
+</style>

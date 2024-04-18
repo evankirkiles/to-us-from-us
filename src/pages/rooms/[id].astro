@@ -1,0 +1,155 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+
+interface Props {}
+
+const { id } = Astro.params;
+---
+
+<RootLayout>
+  <article>
+    <div class="hero">
+      <nav><a href="/">↑ Home</a> <a href="/rooms">↙ All Rooms</a></nav>
+      <div class="overview">
+        <p class="overview_label"><small>Room</small></p>
+        <h1>The Apartment</h1>
+        <p
+          >Lorem ipsum dolor sit amet consectetur. Lectus malesuada at tincidunt
+          praesent. Pellentesque ultrices faucibus cras nunc augue egestas.</p
+        >
+        <!-- <div class="related">
+          <div>
+            <p>Years</p>
+            <ul>
+              <li>John</li>
+              <li>Sam</li>
+              <li>Sarah</li>
+            </ul>
+          </div>
+          <div>
+            <p>People</p>
+            <ul>
+              <li>John</li>
+              <li>Sam</li>
+              <li>Sarah</li>
+            </ul>
+          </div>
+        </div> -->
+      </div>
+      <section class="room"> </section>
+    </div>
+    <section class="memories">
+      <h2 class="sr-only">Memories</h2>
+      <ul>
+        {
+          new Array(10).fill(undefined).map((_, i) => (
+            <li class="memory">
+              <p>
+                Lorem ipsum dolor sit amet consectetur. Lectus malesuada at
+                tincidunt praesent. Pellentesque ultrices faucibus cras nunc
+                augue egestas. Lorem ipsum dolor sit amet consectetur. Lectus
+                malesuada at tincidunt praesent. Pellentesque ultrices faucibus
+                cras nunc augue egestas.
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </article>
+</RootLayout>
+
+<style lang="scss">
+  article {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--page-padding);
+  }
+
+  .hero {
+    display: grid;
+    grid-template: "nav" auto "overview" auto "room" 1fr / 1fr;
+    flex: 1;
+    gap: var(--page-padding);
+    min-block-size: calc(100vh - 2 * var(--page-padding));
+
+    @media screen and (min-width: 1440px) {
+      grid-template:
+        "nav room" auto
+        ". room" 1fr
+        "overview room" auto / 40ch 1fr;
+    }
+  }
+
+  .related {
+    display: flex;
+    justify-content: stretch;
+    gap: 1rem;
+    margin-block-start: 1rem;
+    inline-size: 100%;
+
+    & > div > p {
+      font-size: 1.5rem;
+    }
+
+    & ul {
+      margin-inline-start: 0.5rem;
+    }
+  }
+
+  nav {
+    grid-area: nav;
+  }
+
+  .overview {
+    grid-area: overview;
+    margin-block-start: auto;
+
+    &_label {
+      animation: fade-down 0.5s ease-in-out;
+      color: var(--clr-fg2);
+    }
+
+    & h1 {
+      animation: fade-right 0.5s ease-in-out;
+      margin-block-end: 0.1em;
+      font-size: 3rem;
+      line-height: 1.1;
+    }
+  }
+
+  .room {
+    grid-area: room;
+    border: 1px solid var(--clr-fg);
+    block-size: 100%;
+  }
+
+  .memories {
+    grid-area: memories;
+
+    & > ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(35ch, 100%), 1fr));
+      gap: 1.5rem;
+      font-size: 1.1rem;
+
+      // Animate the timeline offset by 0.15ms
+      $anim-iters: 12;
+      $anim-offset: 50ms;
+      inline-size: 100%;
+
+      & > * {
+        animation: fade-up 0.3s ease-in-out;
+        animation-delay: $anim-iters * $anim-offset;
+        animation-fill-mode: backwards;
+      }
+
+      @for $i from 1 through $anim-iters {
+        & > *:nth-child(#{$i}) {
+          animation-delay: $i * $anim-offset;
+        }
+      }
+    }
+  }
+</style>

@@ -31,11 +31,40 @@
   }
 }
 
+@keyframes fade-right {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes scale-left {
   from {
     transform: scale(0);
   }
   to {
     transform: scale(1);
+  }
+}
+
+@keyframes blur-in-out {
+  0% {
+    filter: blur(0px);
+  }
+  50% {
+    filter: blur(0px);
+  }
+  60% {
+    filter: blur(3px);
+  }
+  70% {
+    filter: blur(0px);
+  }
+  100% {
+    filter: blur(0px);
   }
 }
