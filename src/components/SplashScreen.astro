@@ -4,7 +4,7 @@
 </section>
 
 <script>
-  import { formatDate } from "date-fns";
+  import { format } from "date-fns";
 
   function formatDistanceBetweenDates(date1: number, date2: number) {
     const ms = Math.abs(date2 - date1);
@@ -30,7 +30,7 @@
   const splashCounter = document.querySelector<HTMLElement>("#splashCounter")!;
   function update() {
     const date = new Date();
-    splashDate.textContent = formatDate(date, "MMMM d, yyyy");
+    splashDate.textContent = format(date, "MMMM d, yyyy");
     splashCounter.textContent =
       formatDistanceBetweenDates(
         date.getTime(),

@@ -14,8 +14,8 @@ const previewRedirect = defineMiddleware(
     if (locals.runtime?.env.IS_PREVIEW_ENV === "yes") {
       const pathname = new URL(request.url).pathname;
       if (
-        !isPreviewMode({ cookies, locals }) &&
-        !["/api", "/admin"].some((prefix) => pathname.startsWith(prefix))
+        !["/api", "/admin"].some((prefix) => pathname.startsWith(prefix)) &&
+        !isPreviewMode({ cookies, locals })
       ) {
         // redirect back to studio
         return redirect("/admin", 302);
@@ -31,10 +31,10 @@ const authRedirect = defineMiddleware(
   async ({ request, cookies, redirect, locals }, next) => {
     const pathname = new URL(request.url).pathname;
     if (
-      !isAuthenticated({ cookies, locals }) &&
       !["/api", "/admin", "/login"].some((prefix) =>
         pathname.startsWith(prefix),
-      )
+      ) &&
+      !isAuthenticated({ cookies, locals })
     ) {
       // redirect back to login
       return redirect("/login", 302);

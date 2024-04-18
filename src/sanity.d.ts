@@ -129,8 +129,8 @@ export interface Year extends SanityDocument {
  *
  *
  */
-export interface Year extends SanityDocument {
-  _type: "year";
+export interface Memory extends SanityDocument {
+  _type: "memory";
 
   /**
    * Title — `string`
@@ -152,6 +152,62 @@ export interface Year extends SanityDocument {
    * The approximate date of the memory, used for ordering.
    */
   date: RichDate;
+}
+
+/**
+ * Room
+ *
+ *
+ */
+export interface Room extends SanityDocument {
+  _type: "room";
+
+  /**
+   * Room — `string`
+   *
+   * Title of the room.
+   */
+  title: string;
+
+  /**
+   * Description — `editorText`
+   *
+   * A description of the room.
+   */
+  description?: EditorText;
+
+  /**
+   * Cover Image — `image`
+   *
+   * A cover image to use for the room.
+   */
+  coverImage: {
+    _type: "image";
+    asset: SanityReference<SanityImageAsset>;
+    crop?: SanityImageCrop;
+    hotspot?: SanityImageHotspot;
+  };
+
+  /**
+   * Room File — `file`
+   *
+   * The .glb file of the room.
+   */
+  file: { _type: "file"; asset: SanityReference<any> };
+
+  /**
+   * Start Date — `richDate`
+   *
+   * When did we start living here?
+   */
+  startDate: RichDate;
+
+  /**
+   * End Date — `richDate`
+   *
+   * When did we end living here?
+   */
+  endDate?: RichDate;
 }
 
 export type EditorText = Array<SanityKeyed<SanityBlock>>;
@@ -191,7 +247,7 @@ export type InternalLink = {
    *
    *
    */
-  linkTarget: SanityReference<Page | PageHome>;
+  linkTarget: SanityReference<Year | Memory>;
 
   /**
    * Title — `string`
@@ -244,7 +300,7 @@ export type Seo = {
   };
 };
 
-export type Documents = SiteSettings | SiteFooter | Year | Year;
+export type Documents = SiteSettings | SiteFooter | Year | Memory | Room;
 
 /**
  * This interface is a stub. It was referenced in your sanity schema but
@@ -252,17 +308,3 @@ export type Documents = SiteSettings | SiteFooter | Year | Year;
  * sanity-codegen will let you type this explicity.
  */
 type RichDate = any;
-
-/**
- * This interface is a stub. It was referenced in your sanity schema but
- * the definition was not actually found. Future versions of
- * sanity-codegen will let you type this explicity.
- */
-type Page = any;
-
-/**
- * This interface is a stub. It was referenced in your sanity schema but
- * the definition was not actually found. Future versions of
- * sanity-codegen will let you type this explicity.
- */
-type PageHome = any;
