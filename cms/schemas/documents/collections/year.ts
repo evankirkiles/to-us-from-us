@@ -1,11 +1,12 @@
 import { BiFile } from "react-icons/bi";
 import { defineField, defineType } from "sanity";
+import { MdOutlineCalendarToday } from "react-icons/md";
 
 export default defineType({
   title: "Year",
   name: "year",
   type: "document",
-  icon: BiFile,
+  icon: MdOutlineCalendarToday,
   fields: [
     defineField({
       title: "Title",

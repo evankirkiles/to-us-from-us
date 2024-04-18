@@ -5,8 +5,8 @@ import RootLayout from "@/layouts/RootLayout.astro";
 <RootLayout>
   <article>
     <h1>404</h1>
-    <p>Page not found!</p>
-    <a href="/"><strong>Return home?</strong></a>
+    <p>Page not found.</p>
+    <p><a href="/">↖ Return home</a></p>
   </article>
 </RootLayout>
 
@@ -14,7 +14,18 @@ import RootLayout from "@/layouts/RootLayout.astro";
   article {
     display: flex;
     flex: 1;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-size: 1.1rem;
+
+    & h1 {
+      margin-bottom: -1rem;
+      font-size: 5rem;
+    }
+
+    & p:last-child {
+      margin-block-start: 3rem;
+    }
   }
 </style>

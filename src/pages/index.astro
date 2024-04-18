@@ -6,9 +6,9 @@ import cn from "classnames";
 
 <RootLayout>
   <div class="main">
+    <a href="/api/auth/logout" class="exit">↖ Exit</a>
     <div class="spheres">
-      <h1>To Us, From Us.<br /><span>(E+M)</span></h1>
-      <!-- <a href="/api/auth/logout">Exit</a> -->
+      <h1>To Us, From Us.<br /><span>(M+E)</span></h1>
       <Icon name="Circles" />
       <a href="https://admin.tousfrom.us/admin">Add</a>
     </div>
@@ -62,6 +62,7 @@ import cn from "classnames";
 
   .spheres {
     display: flex;
+    position: relative;
     grid-area: spheres;
     flex-direction: column;
     justify-content: center;
@@ -87,6 +88,15 @@ import cn from "classnames";
         max-block-size: 500px;
       }
     }
+  }
+
+  .exit {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.3;
+    z-index: 1;
+    margin: var(--page-padding);
   }
 
   .about {

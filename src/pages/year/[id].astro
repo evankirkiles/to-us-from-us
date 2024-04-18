@@ -23,7 +23,7 @@ const { id } = Astro.params;
       </ul>
     </section>
     <section class="images">
-      <h2>All images </h2>
+      <h2>Images</h2>
       <div class="images_scroll scrollie no-scrollbar">
         <ul>
           {new Array(20).fill(undefined).map((_, i) => <li class="image" />)}
@@ -120,7 +120,7 @@ const { id } = Astro.params;
   }
 
   .rooms {
-    block-size: 40vh;
+    block-size: min(80vw, 40vh);
 
     & > ul {
       display: flex;

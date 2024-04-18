@@ -1,11 +1,11 @@
-import { BiFile } from "react-icons/bi";
+import { HiOutlineCubeTransparent } from "react-icons/hi2";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
   title: "Room",
   name: "room",
   type: "document",
-  icon: BiFile,
+  icon: HiOutlineCubeTransparent,
   fields: [
     defineField({
       title: "Room",
