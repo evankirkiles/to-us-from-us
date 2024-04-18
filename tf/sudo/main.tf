@@ -43,6 +43,7 @@ resource "cloudflare_api_token" "deploy" {
       data.cloudflare_api_token_permission_groups.main.zone["Config Settings Write"],
       data.cloudflare_api_token_permission_groups.main.zone["Cache Settings Write"],
       data.cloudflare_api_token_permission_groups.main.zone["Zone Settings Write"],
+      data.cloudflare_api_token_permission_groups.main.zone["Dynamic URL Redirects Write"],
       data.cloudflare_api_token_permission_groups.main.zone["Zone Write"],
       data.cloudflare_api_token_permission_groups.main.zone["DNS Write"],
       data.cloudflare_api_token_permission_groups.main.zone["Cache Purge"],

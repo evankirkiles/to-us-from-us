@@ -96,3 +96,39 @@ resource "cloudflare_ruleset" "production" {
     }
   }
 }
+
+/* ----------------------------- Redirect Rules ----------------------------- */
+// Prevent unauthorized access to the main domain
+
+resource "cloudflare_ruleset" "redirect" {
+  zone_id     = data.cloudflare_zone.main.zone_id
+  name        = "Redirect to Login"
+  description = "Redirects unauthenticated users to the login page"
+  kind        = "zone"
+  phase       = "http_request_dynamic_redirect"
+
+  rules {
+    action = "redirect"
+    action_parameters {
+      from_value {
+        status_code = 302
+        target_url {
+          value = "/login"
+        }
+        preserve_query_string = false
+      }
+    }
+    # This is a hack to still allow unauthenticated users access to static files
+    # (JS, CSS) but not the pages with data themselves
+    expression = "(${join(" and ", [
+      "not http.cookie contains \"tousfromus-auth=${var.auth_secret}\"",
+      "http.host eq \"${var.cloudflare_domain}\"",
+      "http.request.uri.path ne \"/login\"",
+      "not starts_with(http.request.uri.path, \"/api\")",
+      "not starts_with(http.request.uri.path, \"/admin\")",
+      "not http.request.uri.path contains \".\"",
+    ])})"
+    description = "redirect back to login"
+    enabled     = true
+  }
+}
