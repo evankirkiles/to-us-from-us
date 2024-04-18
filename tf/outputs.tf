@@ -20,9 +20,6 @@ output "cf_zone_id" {
 
 output "env_local" {
   sensitive = true
-  value = join("\n", flatten([
-    [for key, value in local.gh_variables : "${key}=${value}"],
-    [for key, value in local.preview_env_variables : "${key}=${value}"],
-    [for key, value in local.preview_secrets : "${key}=${value}"]
-  ]))
+  value = join("\n",
+  [for key, value in merge(local.gh_variables, local.preview_env_variables, local.preview_secrets, local.shared_secrets) : "${key}=\"${value}\""])
 }

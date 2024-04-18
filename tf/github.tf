@@ -13,6 +13,8 @@ locals {
     "SANITY_API_READ_TOKEN" = var.sanity_api_read_token
     "CLOUDFLARE_API_TOKEN"  = var.cloudflare_api_token
     "SCOPED_GITHUB_PAT"     = var.scoped_github_pat
+    "AUTH_PASSWORD"         = var.auth_password
+    "AUTH_SECRET"           = var.auth_secret
   }
 
   gh_variables = {

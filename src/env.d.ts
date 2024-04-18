@@ -25,6 +25,9 @@ interface CloudFlareEnvBindings {
   readonly CLOUDFLARE_R2_BUCKET_NAME: string;
   readonly SANITY_API_READ_TOKEN: string;
   readonly SANITY_PREVIEW_SECRET: string;
+  readonly AUTH_SECRET: string;
+  readonly AUTH_PASSWORD: string;
+  readonly DISABLE_CACHE: string;
   readonly R2: R2Bucket;
 }
 

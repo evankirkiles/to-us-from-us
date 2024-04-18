@@ -1,4 +1,4 @@
-import { isPreviewMode } from "@/utils/constants";
+import { isAuthenticated, isPreviewMode } from "@/utils/constants";
 import { defineMiddleware, sequence } from "astro:middleware";
 import { CloudflareR2Cache } from "@/lib/CloudflareR2Cache";
 
@@ -24,7 +24,25 @@ const previewRedirect = defineMiddleware(
 
     // return a Response or the result of calling `next()`
     return next();
-  }
+  },
+);
+
+const authRedirect = defineMiddleware(
+  async ({ request, cookies, redirect, locals }, next) => {
+    const pathname = new URL(request.url).pathname;
+    if (
+      !isAuthenticated({ cookies, locals }) &&
+      !["/api", "/admin", "/login"].some((prefix) =>
+        pathname.startsWith(prefix),
+      )
+    ) {
+      // redirect back to login
+      return redirect("/login", 302);
+    }
+
+    // return a Response or the result of calling `next()`
+    return next();
+  },
 );
 
 /**
@@ -48,6 +66,8 @@ const useCloudFlareR2Cache = defineMiddleware(
     if (locals.runtime.env.IS_PREVIEW_ENV === "yes") return next();
     // If R2 binding not present, don't cache
     if (!locals.runtime.env.R2) return next();
+    // If cache manually disabled, don't cache
+    if (locals.runtime.env.DISABLE_CACHE === "yes") return next();
     // If going for API route, don't cache
     if (["/api", "/admin"].some((pref) => pathname.startsWith(pref)))
       return next();
@@ -89,10 +109,10 @@ const useCloudFlareR2Cache = defineMiddleware(
     resp.headers.set("Last-Modified", new Date().toUTCString());
     resp.headers.set(
       "CDN-Cache-Control",
-      `public, max-age=${60 * 60 * 24 * 365}`
+      `public, max-age=${60 * 60 * 24 * 365}`,
     );
     return new Response(body, resp);
-  }
+  },
 );
 
 // Fetch cache for local development. To not run up bills.
@@ -110,5 +130,5 @@ const useFetchCache = defineMiddleware(async ({ locals }, next) => {
 });
 
 export const onRequest = sequence(
-  ...[previewRedirect, useCloudFlareR2Cache, useFetchCache]
+  ...[previewRedirect, authRedirect, useCloudFlareR2Cache, useFetchCache],
 );

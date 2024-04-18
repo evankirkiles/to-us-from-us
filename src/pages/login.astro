@@ -1,0 +1,53 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+---
+
+<RootLayout>
+  <form method="POST" action="/api/auth/login">
+    <input
+      type="text"
+      placeholder="What do you call me?"
+      required
+      autofocus
+      autocomplete="off"
+      autocapitalize="off"
+      spellcheck="false"
+      name="password"
+    />
+    <input type="submit" value="Go →" />
+  </form>
+</RootLayout>
+
+<style lang="scss">
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5em;
+    margin: auto;
+    font-size: 1rem;
+
+    & input[type="text"] {
+      border: none;
+      border-block-end: 1px solid var(--clr-fg);
+      background-color: transparent;
+      padding-block: 0.3em;
+      color: var(--clr-fg);
+    }
+
+    & input[type="submit"] {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      border: none;
+      background-color: transparent;
+      pointer-events: none;
+      color: var(--clr-fg);
+    }
+
+    &:valid input[type="submit"] {
+      opacity: 1;
+      transition-delay: 1s;
+      pointer-events: all;
+    }
+  }
+</style>

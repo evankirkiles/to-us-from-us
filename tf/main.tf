@@ -36,6 +36,11 @@ locals {
   prod_url      = "https://${local.prod_hostname}"
   admin_url     = "https://admin.${var.cloudflare_domain}"
 
+  shared_secrets = {
+    AUTH_SECRET   = var.auth_secret
+    AUTH_PASSWORD = var.auth_password
+  }
+
   preview_env_variables = {
     IS_PREVIEW_ENV            = "yes"
     SANITY_PRODUCTION_URL     = local.prod_url
@@ -66,6 +71,7 @@ resource "cloudflare_pages_project" "production" {
       r2_buckets = {
         R2 = cloudflare_r2_bucket.cache.name
       }
+      secrets             = local.shared_secrets
       compatibility_date  = "2024-01-11"
       compatibility_flags = ["nodejs_compat"]
     }
@@ -73,6 +79,7 @@ resource "cloudflare_pages_project" "production" {
       r2_buckets = {
         R2 = cloudflare_r2_bucket.cache.name
       }
+      secrets             = local.shared_secrets
       compatibility_date  = "2024-01-11"
       compatibility_flags = ["nodejs_compat"]
     }
@@ -88,13 +95,13 @@ resource "cloudflare_pages_project" "preview" {
   deployment_configs {
     production {
       environment_variables = local.preview_env_variables
-      secrets               = local.preview_secrets
+      secrets               = merge(local.preview_secrets, local.shared_secrets)
       compatibility_date    = "2024-01-11"
       compatibility_flags   = ["nodejs_compat"]
     }
     preview {
       environment_variables = local.preview_env_variables
-      secrets               = local.preview_secrets
+      secrets               = merge(local.preview_secrets, local.shared_secrets)
       compatibility_date    = "2024-01-11"
       compatibility_flags   = ["nodejs_compat"]
     }

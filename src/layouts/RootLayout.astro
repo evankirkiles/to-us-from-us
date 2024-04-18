@@ -6,6 +6,7 @@ import { isPreviewMode } from "@/utils/constants";
 import { setSanityPictureDefaults } from "astro-sanity-picture";
 import { imageBuilder } from "@/utils/imageBuilder";
 import { ViewTransitions } from "astro:transitions";
+import SplashScreen from "@/components/SplashScreen.astro";
 
 interface Props {}
 
@@ -29,8 +30,21 @@ setSanityPictureDefaults({ imageUrlBuilder: imageBuilder });
     <slot name="head" />
   </head>
   <body lang="en">
+    <script is:inline>
+      if (!window.location.pathname.startsWith("/login")) {
+        const lastShowed = localStorage.getItem("splash-screen-showed");
+        if (
+          !lastShowed ||
+          Date.now() - parseInt(lastShowed) > 1000 * 60 * 60 * 24
+        ) {
+          document.body.classList.add("show-splash");
+          localStorage.setItem("splash-screen-showed", Date.now().toString());
+        }
+      }
+    </script>
     <main id="maincontent">
       <slot />
     </main>
+    <SplashScreen />
   </body></html
 >

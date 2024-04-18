@@ -26,6 +26,8 @@ jobs:
       TF_VAR_sanity_studio_dataset: ${{ vars.SANITY_STUDIO_DATASET }}
       TF_VAR_sanity_studio_api_version: ${{ vars.SANITY_STUDIO_API_VERSION }}
       TF_VAR_scoped_github_pat: ${{ secrets.SCOPED_GITHUB_PAT}}
+      TF_VAR_auth_secret: ${{ secrets.AUTH_SECRET}}
+      TF_VAR_auth_password: ${{ secrets.AUTH_PASSWORD}}
     outputs:
       CF_PROJ_NAME_PROD: ${{ steps.output.outputs.cf_proj_name_prod }}
       CF_PROJ_NAME_PREVIEW: ${{ steps.output.outputs.cf_proj_name_preview }}

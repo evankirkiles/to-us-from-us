@@ -74,3 +74,19 @@ variable "sanity_studio_api_version" {
   type        = string
   default     = "2024-04-16"
 }
+
+/* ----------------------------- Authentication ----------------------------- */
+
+variable "auth_secret" {
+  description = "The secret used to verify authenticated users."
+  type        = string
+  sensitive   = true
+  nullable    = false
+}
+
+variable "auth_password" {
+  description = "The password used to authenticate users."
+  type        = string
+  sensitive   = true
+  nullable    = false
+}

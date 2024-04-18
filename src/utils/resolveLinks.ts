@@ -1,11 +1,6 @@
-import type {
-  Page,
-  PageHome,
-  SanityKeyedReference,
-  SanityReference,
-} from "@/sanity";
+import type { SanityKeyedReference, SanityReference, Year } from "@/sanity";
 
-export type Linkable = Page | PageHome;
+export type Linkable = Year;
 
 export type ResolvedReference<T> =
   // match `SanityKeyedReference` and unwrap via `infer U`
@@ -27,9 +22,9 @@ export function resolveReference<
 
 export function resolveLinkURL(link: Linkable) {
   switch (link._type) {
-    case "pageHome":
+    case "year":
+      return `/year/${link.title}`;
+    default:
       return "/";
-    case "page":
-      return `/${link.slug?.current || ""}`;
   }
 }

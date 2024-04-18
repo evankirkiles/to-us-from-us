@@ -21,6 +21,7 @@ body {
   /* Firefox */
   -ms-overflow-style: none;
   background-color: var(--clr-bg);
+  font-size: 1.3rem;
 
   /* IE 10+ */
   &::-webkit-scrollbar {
@@ -29,6 +30,13 @@ body {
     width: 0px;
     height: 0px;
   }
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: var(--page-padding);
 }
 
 :target {
@@ -42,8 +50,38 @@ body {
 
 button:focus,
 :focus-visible {
-  outline: 1px dotted var(--clr-fg);
-  outline-offset: 5px;
+  outline: 1px dotted var(--clr-fg2);
+  outline-offset: 7px;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE 10+ */
+  &::-webkit-scrollbar {
+    background: transparent;
+    /* Chrome/Safari/Webkit */
+    width: 0px;
+    height: 0px;
+  }
+}
+
+.minimal-horizontal-scrollbar {
+  scrollbar-color: var(--clr-fg);
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    cursor: pointer;
+    background: transparent;
+    inline-size: 100%;
+    block-size: 1rem;
+    overflow: visible;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    border-block-end: 1px solid var(--clr-bg2);
+    background-color: transparent;
+  }
 }
 
 .sr-only:not(:focus):not(:active),

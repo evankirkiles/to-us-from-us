@@ -1,7 +1,284 @@
 ---
 import RootLayout from "@/layouts/RootLayout.astro";
+import { Icon } from "astro-icon/components";
+import cn from "classnames";
 ---
 
 <RootLayout>
-  <div>HI</div>
+  <div class="main">
+    <div class="spheres">
+      <h1>To Us, From Us.<br /><span>(E+M)</span></h1>
+      <!-- <a href="/api/auth/logout">Exit</a> -->
+      <Icon name="Circles" />
+      <a href="https://admin.tousfrom.us/admin">Add</a>
+    </div>
+    <div class="about">
+      <p
+        >Lorem ipsum dolor sit amet consectetur. Lectus malesuada at tincidunt
+        praesent. Pellentesque ultrices faucibus cras nunc augue egestas.</p
+      >
+    </div>
+    <section class="years no-scrollbar">
+      <ul>
+        {
+          new Array(6).fill(undefined).map((_, i) => (
+            <li class={cn("year", i > 4 && "future")}>
+              <h2 class="year_title">
+                {i > 4 ? "202" + i : <a href={`/year/202${i}`}>202{i}</a>}
+              </h2>
+              <div role="presentation" class="timeline" />
+              <div class="year_description">
+                {i <= 4 ? (
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur. Lectus malesuada at
+                    tincidunt praesent. Pellentesque ultrices faucibus cras nunc
+                    augue egestas.
+                  </p>
+                ) : (
+                  <p>
+                    ⅒☂⬺✘┫⤡⣃⮩⫫♦Ⳡ⠉⭤⟅☺⫚␍⤀ⴛⲀ⛢⎭⵬⩿ⵂ⋈⥂☘␍⤶⎍⽗☗⬊∜⣈⍓⥶⵾⬏⻗⁉⟀⿵⻻⹗⟸⤓ⱹⰏ⹓⹘⓭✢⎭⇷➩⏦⡟
+                  </p>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
 </RootLayout>
+
+<style lang="scss">
+  .main {
+    display: grid;
+    grid-template: "." 1fr "spheres" auto "about" auto "." 1fr "years" auto / 1fr;
+    flex: 1;
+    gap: var(--page-padding);
+
+    @media screen and (min-width: 1024px) {
+      grid-template: "spheres spheres about" auto "spheres spheres about" 1fr "years years years" auto / auto 1fr auto;
+    }
+  }
+
+  .spheres {
+    display: flex;
+    grid-area: spheres;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    & > h1 {
+      line-height: 1.3;
+      text-align: center;
+
+      span {
+        color: var(--clr-fg2);
+        font-style: italic;
+      }
+    }
+
+    & > svg {
+      inline-size: 100%;
+      block-size: auto;
+      max-block-size: 300px;
+
+      @media screen and (min-width: 1024px) {
+        max-block-size: 500px;
+      }
+    }
+  }
+
+  .about {
+    grid-area: about;
+    margin: 0 auto;
+    margin-block-end: 2rem;
+    max-inline-size: 40ch;
+    font-size: 1.2rem;
+
+    @media screen and (min-width: 768px) {
+      max-inline-size: 40ch;
+      font-size: 1.5rem;
+      text-align: left;
+    }
+  }
+
+  .years {
+    display: flex;
+    position: relative;
+    grid-area: years;
+    flex-direction: column;
+    margin-inline: calc(-0.5 * var(--page-padding));
+    padding: var(--page-padding) 0;
+    inline-size: calc(100% + var(--page-padding));
+
+    & > ul {
+      display: flex;
+      row-gap: var(--page-padding);
+      flex-direction: column-reverse;
+      z-index: 0;
+    }
+
+    &::before {
+      display: block;
+      position: sticky;
+      flex-shrink: 0;
+      transform: translateY(calc(-1 * var(--page-padding)));
+      z-index: 1;
+      margin-inline: calc(-1 * var(--page-padding));
+      margin-block-end: -40px;
+      inset-block: var(--page-padding);
+      background: linear-gradient(to bottom, var(--clr-bg), transparent);
+      inline-size: calc(100% + 2 * var(--page-padding));
+      block-size: 40px;
+      content: "";
+    }
+
+    &::after {
+      display: block;
+      position: sticky;
+      flex-shrink: 0;
+      transform: translateY(var(--page-padding));
+      z-index: 1;
+      margin-inline: calc(-1 * var(--page-padding));
+      margin-block-start: -40px;
+      inset-block: var(--page-padding);
+      background: linear-gradient(to top, var(--clr-bg), transparent);
+      inline-size: calc(100% + 2 * var(--page-padding));
+      block-size: 40px;
+      content: "";
+    }
+
+    @media screen and (min-width: 768px) {
+      flex-direction: row-reverse;
+      margin-inline: calc(-1 * var(--page-padding));
+      padding: 0 var(--page-padding);
+      inline-size: calc(100% + 2 * var(--page-padding));
+      overflow: scroll clip;
+
+      & > ul {
+        display: grid;
+        grid-template-rows: repeat(3, auto);
+        grid-auto-columns: auto;
+        column-gap: var(--page-padding);
+        row-gap: 1rem;
+        z-index: 0;
+        margin: 0 auto;
+      }
+
+      &::before {
+        left: 0;
+        margin: unset;
+        margin-inline-end: -40px;
+        inset-block: 0;
+        background: linear-gradient(to left, var(--clr-bg), transparent);
+        inline-size: 40px;
+        block-size: 100%;
+        content: "";
+      }
+
+      &::after {
+        right: 0;
+        margin: unset;
+        margin-inline-start: -40px;
+        inset-block: 0;
+        background: linear-gradient(to right, var(--clr-bg), transparent);
+        inline-size: 40px;
+        block-size: 100%;
+        content: "";
+      }
+    }
+  }
+
+  .year {
+    display: grid;
+    position: relative;
+    column-gap: calc(0.5 * var(--page-padding));
+    grid-template: "timeline title" auto "timeline description" auto "timeline spaces" auto / auto 1fr;
+    flex-shrink: 0;
+    flex-direction: column;
+    inline-size: 100%;
+    font-size: 1.1rem;
+
+    // Animate the timeline offset by 0.15ms
+    $anim-iters: 10;
+    $anim-offset: 100ms;
+    inline-size: 100%;
+
+    &.future {
+      color: var(--clr-fg2);
+    }
+    & > * {
+      animation-delay: $anim-iters * $anim-offset;
+      animation-fill-mode: backwards;
+    }
+
+    @for $i from 1 through $anim-iters {
+      &:nth-last-child(#{$i}) > * {
+        animation-delay: $i * $anim-offset;
+      }
+    }
+
+    @media screen and (min-width: 768px) {
+      grid-template: unset;
+      grid-template-rows: subgrid;
+      grid-row: 1 / -1;
+      inline-size: 35ch;
+
+      & > * {
+        grid-area: unset;
+      }
+    }
+
+    &_title {
+      grid-area: title;
+      animation: fade-down 0.5s ease-in-out;
+      font-size: 4rem;
+      line-height: 1;
+    }
+
+    &_description {
+      grid-area: description;
+      animation: fade-up 0.5s ease-in-out;
+    }
+  }
+
+  .timeline {
+    display: flex;
+    grid-area: timeline;
+    justify-content: center;
+    transform-origin: 50% 0%;
+    animation: scale-left 0.1s ease-in-out;
+    margin: calc(-1 * var(--page-padding)) 0;
+    background-color: var(--clr-fg);
+    padding: calc(2 * var(--page-padding)) 0;
+    inline-size: 1px;
+    block-size: calc(100% + 2 * var(--page-padding));
+    overflow: visible;
+
+    &::after {
+      display: block;
+      flex-shrink: 0;
+      background-color: var(--clr-fg);
+      inline-size: 1rem;
+      block-size: 1px;
+      content: "";
+    }
+
+    @media screen and (min-width: 768px) {
+      grid-row-start: 2;
+      justify-content: unset;
+      align-items: center;
+      transform-origin: 100% 50%;
+      margin: 0 calc(-1 * var(--page-padding));
+      padding: 0 calc(2.5 * var(--page-padding));
+      inline-size: calc(100% + 2 * var(--page-padding));
+      block-size: 1px;
+
+      &::after {
+        inline-size: 1px;
+        block-size: 1rem;
+      }
+    }
+  }
+</style>
