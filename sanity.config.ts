@@ -22,7 +22,7 @@ const { theme } = (await import(
 export default defineConfig({
   theme,
   name: "to-us-from-us",
-  title: "To Us From Us",
+  title: "To Us, From Us.",
   icon: Icon,
   projectId: projectId!,
   dataset: dataset!,

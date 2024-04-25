@@ -1,0 +1,269 @@
+---
+import RootLayout from "@/layouts/RootLayout.astro";
+
+interface Props {}
+---
+
+<RootLayout>
+  <nav><a href="/">↑ Home</a></nav>
+  <article>
+    <hgroup class="overview">
+      <h1>2020</h1>
+      <p
+        >Lorem ipsum dolor sit amet consectetur. Lectus malesuada at tincidunt
+        praesent. Pellentesque ultrices faucibus cras nunc augue egestas.</p
+      >
+    </hgroup>
+    <section class="rooms scrollie no-scrollbar">
+      <h2 class="sr-only">Rooms</h2>
+      <ul>
+        {
+          new Array(1).fill(undefined).map((_, i) => (
+            <li class="room">
+              <figure>
+                <div class="room_image" />
+                <figcaption>
+                  <p>
+                    <a href="/rooms/1">The Apartment</a>
+                  </p>
+                </figcaption>
+              </figure>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+    <section class="images">
+      <h2>Images</h2>
+      <div class="images_scroll scrollie no-scrollbar">
+        <ul>
+          {new Array(2).fill(undefined).map((_, i) => <li class="image" />)}
+        </ul>
+      </div>
+    </section>
+    <section class="memories">
+      <h2 class="sr-only">Memories</h2>
+      <ul>
+        {
+          new Array(3).fill(undefined).map((_, i) => (
+            <li class="memory">
+              <p>
+                Lorem ipsum dolor sit amet consectetur. Lectus malesuada at
+                tincidunt praesent. Pellentesque ultrices faucibus cras nunc
+                augue egestas. Lorem ipsum dolor sit amet consectetur. Lectus
+                malesuada at tincidunt praesent. Pellentesque ultrices faucibus
+                cras nunc augue egestas.
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </article>
+</RootLayout>
+
+<style lang="scss">
+  article {
+    display: grid;
+    grid-template: "overview" auto "rooms" auto "images" auto "memories" auto / 1fr;
+    flex: 1;
+    gap: var(--page-padding);
+
+    @media screen and (min-width: 768px) {
+      grid-template: "overview rooms" 1fr "images images" auto "memories memories" auto / 50ch 1fr;
+    }
+
+    @media screen and (min-width: 1440px) {
+      grid-template: "overview rooms" 1fr "overview images" auto "memories memories" auto / 50ch 1fr;
+    }
+  }
+
+  .overview {
+    grid-area: overview;
+    font-size: 1.5rem;
+
+    & h1 {
+      animation: fade-up 0.5s ease-in-out;
+      pointer-events: none;
+      font-size: clamp(6rem, 40vw, 15.5rem);
+      line-height: 0.9;
+    }
+  }
+
+  .scrollie {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    margin-inline: calc(-1 * var(--page-padding));
+    padding: calc(0 * var(--page-padding)) var(--page-padding);
+    inline-size: calc(100% + 2 * var(--page-padding));
+    overflow-x: scroll;
+
+    $gradient-width: 30px;
+
+    &::before {
+      position: sticky;
+      left: 0;
+      flex-shrink: 0;
+      transform: translateX(calc(-1 * var(--page-padding)));
+      z-index: 1;
+      margin-inline-end: -1 * $gradient-width;
+      inset-block: 0;
+      background: linear-gradient(to right, var(--clr-bg), transparent);
+      inline-size: $gradient-width;
+      block-size: 100%;
+      content: "";
+    }
+
+    &::after {
+      position: sticky;
+      right: 0;
+      flex-shrink: 0;
+      transform: translateX(calc(var(--page-padding)));
+      margin-inline-start: auto;
+      margin-inline-start: -1 * $gradient-width;
+      inset-block: 0;
+      background: linear-gradient(to left, var(--clr-bg), transparent);
+      inline-size: $gradient-width;
+      block-size: 100%;
+      content: "";
+    }
+  }
+
+  .rooms {
+    & > ul {
+      display: flex;
+      gap: 1rem;
+      z-index: 0;
+      block-size: 100%;
+
+      // Animate the timeline offset by 0.15ms
+      $anim-iters: 12;
+      $anim-offset: 200ms;
+
+      & > * {
+        animation: fade-left 0.4s ease-in-out;
+        animation-delay: $anim-iters * $anim-offset;
+        animation-fill-mode: backwards;
+      }
+
+      @for $i from 1 through $anim-iters {
+        & > *:nth-child(#{$i}) {
+          animation-delay: $i * $anim-offset;
+        }
+      }
+    }
+  }
+
+  .room {
+    flex-shrink: 0;
+    block-size: 100%;
+
+    & > figure {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      padding-block-end: 0.5rem;
+
+      & > figcaption {
+        text-align: center;
+
+        & a::after {
+          position: absolute;
+          z-index: 1;
+          inset: 0;
+          inline-size: 100%;
+          block-size: 100%;
+          content: "";
+        }
+      }
+    }
+
+    &_image {
+      border-radius: 100%;
+      background-color: var(--clr-fg);
+      aspect-ratio: 1;
+      inline-size: min(80vw, 40vh);
+      inline-size: auto;
+      block-size: min(80vw, 40vh);
+    }
+  }
+
+  .memories {
+    grid-area: memories;
+
+    & > ul {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(35ch, 100%), 1fr));
+      gap: 1.5rem;
+      font-size: 1.1rem;
+
+      // Animate the timeline offset by 0.15ms
+      $anim-iters: 12;
+      $anim-offset: 50ms;
+      inline-size: 100%;
+
+      & > * {
+        animation: fade-up 0.3s ease-in-out;
+        animation-delay: $anim-iters * $anim-offset;
+        animation-fill-mode: backwards;
+      }
+
+      @for $i from 1 through $anim-iters {
+        & > *:nth-child(#{$i}) {
+          animation-delay: $i * $anim-offset;
+        }
+      }
+    }
+  }
+
+  .images {
+    grid-area: images;
+    margin-inline: calc(-1 * var(--page-padding));
+    padding: calc(0 * var(--page-padding)) var(--page-padding);
+    min-width: 0;
+    inline-size: calc(100% + 2 * var(--page-padding));
+
+    & > h2 {
+      margin-block-end: 0.5em;
+    }
+
+    &_scroll {
+      block-size: 8vh;
+
+      & > ul {
+        display: flex;
+        gap: 1rem;
+        z-index: 0;
+        block-size: 100%;
+
+        // Animate the timeline offset by 0.15ms
+        $anim-iters: 12;
+        $anim-offset: 50ms;
+
+        & > * {
+          animation: fade-left 0.3s ease-in-out;
+          animation-delay: $anim-iters * $anim-offset;
+          animation-fill-mode: backwards;
+        }
+
+        @for $i from 1 through $anim-iters {
+          & > *:nth-child(#{$i}) {
+            animation-delay: $i * $anim-offset;
+          }
+        }
+      }
+    }
+  }
+
+  .image {
+    flex-shrink: 0;
+    background-color: var(--clr-fg);
+    aspect-ratio: 3/4;
+    inline-size: auto;
+    block-size: 100%;
+  }
+</style>

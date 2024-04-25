@@ -67,13 +67,13 @@ const { id } = Astro.params;
   if (target) {
     const world = new World(
       target,
-      "/assets/characters/maria2.glb",
-      "/assets/worlds/yalec22.glb",
+      "https://cdn.sanity.io/files/n2e3thio/production/2f96e3f845b2111815178bbf83d1c88fdd8b7946.glb",
+      "https://cdn.sanity.io/files/n2e3thio/production/20cdc8b860c4def458d385f9bf8ef91bab83c144.glb",
       {},
       {
         forceTouchScreen: true,
         pixelRatio: 0.4,
-      },
+      }
     );
     world.render;
   }
