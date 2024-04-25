@@ -9,10 +9,10 @@ export default defineType({
   icon: MdOutlineCalendarToday,
   fields: [
     defineField({
-      title: "Title",
-      name: "title",
-      description: "Title to use for links and SEO",
-      type: "string",
+      title: "Year",
+      name: "year",
+      description: "Which year does this represent?",
+      type: "number",
       validation: (Rule) => Rule.required(),
       codegen: { required: true },
     }),
@@ -27,7 +27,7 @@ export default defineType({
   ],
   preview: {
     select: {
-      title: "title",
+      title: "year",
       subtitle: "description",
     },
   },

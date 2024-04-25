@@ -1,7 +1,13 @@
 ---
+import Link from "@/components/Link.astro";
 import RootLayout from "@/layouts/RootLayout.astro";
+import { useQuery, yearsQuery } from "@/queries/contentQueries";
 import { Icon } from "astro-icon/components";
 import cn from "classnames";
+import PText from "@/components/Text/PText.astro";
+
+const years = await useQuery(Astro)(yearsQuery);
+const thisYear = new Date().getFullYear();
 ---
 
 <RootLayout>
@@ -21,7 +27,29 @@ import cn from "classnames";
     <section class="years no-scrollbar">
       <ul>
         {
-          new Array(6).fill(undefined).map((_, i) => (
+          years.map((year) => {
+            const isFuture = year.year > thisYear;
+            return (
+              <li class={cn("year", isFuture && "future")}>
+                <h2 class="year_title">
+                  {isFuture ? year.year : <Link to={year} />}
+                </h2>
+                <div role="presentation" class="timeline" />
+                <div class="year_description">
+                  {isFuture ? (
+                    <p>
+                      ⅒☂⬺✘┫⤡⣃⮩⫫♦Ⳡ⠉⭤⟅☺⫚␍⤀ⴛⲀ⛢⎭⵬⩿ⵂ⋈⥂☘␍⤶⎍⽗☗⬊∜⣈⍓⥶⵾⬏⻗⁉⟀⿵⻻⹗⟸⤓ⱹⰏ⹓⹘⓭✢⎭⇷➩⏦⡟
+                    </p>
+                  ) : (
+                    <PText value={year.description} />
+                  )}
+                </div>
+              </li>
+            );
+          })
+        }
+        {
+          new Array(0).fill(undefined).map((_, i) => (
             <li class={cn("year", i > 4 && "future")}>
               <h2 class="year_title">
                 {i > 4 ? "202" + i : <a href={`/years/202${i}`}>202{i}</a>}

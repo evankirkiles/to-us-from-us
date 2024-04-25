@@ -1,0 +1,68 @@
+---
+import type { InternalLink, Link } from "@/sanity";
+import {
+  resolveLinkURL,
+  resolveReference,
+  type ResolvedReference,
+} from "@/utils/resolveLinks";
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"a"> {
+  to: InternalLink | Link | ResolvedReference<InternalLink["linkTarget"]>;
+  withAriaCurrent?: boolean;
+}
+
+const { url } = Astro;
+const { to: link, withAriaCurrent, ...rest } = Astro.props;
+
+let title: string | undefined = undefined;
+const aProps = { ...rest };
+
+switch (link._type) {
+  case "internalLink": {
+    const target = resolveReference(link.linkTarget);
+    (aProps as any)["data-link-type"] = target._type;
+    let targetTitle;
+    switch (target._type) {
+      case "year":
+        targetTitle = target.year.toString();
+        break;
+    }
+    let hrefRaw = resolveLinkURL(target);
+    if (!hrefRaw) break;
+    aProps.href = hrefRaw;
+    const route = url.pathname;
+    if (
+      withAriaCurrent &&
+      ((hrefRaw !== "/" && route.startsWith(hrefRaw)) || route === hrefRaw)
+    )
+      aProps["aria-current"] = "page";
+    title = link.title || targetTitle;
+    break;
+  }
+  case "link": {
+    aProps.href = link.href || (link as any).url;
+    if (link.blank !== false) {
+      aProps.target = "_blank";
+      aProps.rel = "noopener noreferrer";
+    }
+    title = link.title || link.href;
+    break;
+  }
+  case "year":
+  case "memory":
+    switch (link._type) {
+      case "year":
+        title = link.year.toString();
+        break;
+      case "memory":
+        title = link.title;
+        break;
+    }
+    aProps["data-link-type"] = link._type;
+    aProps.href = resolveLinkURL(link);
+}
+---
+
+{/* prettier-ignore */}
+<a {...aProps}><slot>{title}</slot></a>

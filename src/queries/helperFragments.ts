@@ -41,6 +41,17 @@ export const imageQuery = groq`
   }
 `;
 
+export const blockQuery = groq`
+  ...,
+  _type == "block" => {
+    ...,
+    markDefs[] {
+      ...,
+      ${linkQuery}
+    }
+  }
+`;
+
 /* --------------------------------- Modules -------------------------------- */
 
 export const ifModuleIsBlockQuery = groq`

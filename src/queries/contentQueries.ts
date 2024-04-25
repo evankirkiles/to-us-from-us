@@ -2,6 +2,8 @@ import groq from "groq";
 import { sanityClient } from "sanity:client";
 import type { AstroGlobal } from "astro";
 import { isPreviewMode } from "@/utils/constants";
+import { type Year } from "@/sanity";
+import { blockQuery } from "@/queries/helperFragments";
 
 export type TypedGroq<T, P> = string & [T, P];
 type SlugParam = { slug: string };
@@ -94,3 +96,11 @@ export const slugsFor = (type: string) => async () => {
   const slugs = await sanityClient.fetch<{ slug: string }[]>(slugsQuery(type));
   return slugs.map(({ slug }: { slug: string }) => ({ params: { slug } }));
 };
+
+export const yearsQuery = t<Year[]>(groq`
+*[_type == "year"] | order(year asc) {
+  _type,
+  year,
+  description[] { ${blockQuery} }
+}
+`);

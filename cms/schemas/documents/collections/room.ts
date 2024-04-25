@@ -28,14 +28,15 @@ export default defineType({
       type: "image",
       validation: (Rule) => Rule.required(),
       codegen: { required: true },
+      options: {
+        hotspot: true,
+      },
     }),
     defineField({
       title: "Room File",
       name: "file",
       description: "The .glb file of the room.",
       type: "file",
-      validation: (Rule) => Rule.required(),
-      codegen: { required: true },
     }),
     defineField({
       title: "Start Date",

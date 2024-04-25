@@ -1,8 +1,8 @@
 import memory from "./memory";
 import year from "./year";
 import room from "./room";
-import person from "cms/schemas/documents/collections/person";
-import place from "cms/schemas/documents/collections/place";
+import person from "./person";
+import place from "./place";
 
 const collections = [year, memory, room, person, place];
 

@@ -1,6 +1,11 @@
-import type { SanityKeyedReference, SanityReference, Year } from "@/sanity";
+import type {
+  InternalLink,
+  SanityKeyedReference,
+  SanityReference,
+  Year,
+} from "@/sanity";
 
-export type Linkable = Year;
+export type Linkable = ResolvedReference<InternalLink["linkTarget"]>;
 
 export type ResolvedReference<T> =
   // match `SanityKeyedReference` and unwrap via `infer U`
@@ -23,7 +28,7 @@ export function resolveReference<
 export function resolveLinkURL(link: Linkable) {
   switch (link._type) {
     case "year":
-      return `/year/${link.title}`;
+      return `/years/${link.year}`;
     default:
       return "/";
   }

@@ -110,11 +110,11 @@ export interface Year extends SanityDocument {
   _type: "year";
 
   /**
-   * Title — `string`
+   * Year — `number`
    *
-   * Title to use for links and SEO
+   * Which year does this represent?
    */
-  title: string;
+  year: number;
 
   /**
    * Description — `editorText`
@@ -193,7 +193,7 @@ export interface Room extends SanityDocument {
    *
    * The .glb file of the room.
    */
-  file: { _type: "file"; asset: SanityReference<any> };
+  file?: { _type: "file"; asset: SanityReference<any> };
 
   /**
    * Start Date — `richDate`
@@ -208,6 +208,66 @@ export interface Room extends SanityDocument {
    * When did we end living here?
    */
   endDate?: RichDate;
+}
+
+/**
+ * Person
+ *
+ *
+ */
+export interface Person extends SanityDocument {
+  _type: "person";
+
+  /**
+   * Name — `string`
+   *
+   * Name of the person.
+   */
+  name: string;
+
+  /**
+   * Slug — `slug`
+   *
+   * Slug of the person's name, used in URLs.
+   */
+  slug: { _type: "slug"; current: string };
+
+  /**
+   * Color — `color`
+   *
+   * A color to color-code this person by.
+   */
+  color: Color;
+}
+
+/**
+ * Place
+ *
+ *
+ */
+export interface Place extends SanityDocument {
+  _type: "place";
+
+  /**
+   * Name — `string`
+   *
+   * Name of the person.
+   */
+  name: string;
+
+  /**
+   * Slug — `slug`
+   *
+   * Slug of the person's name, used in URLs.
+   */
+  slug: { _type: "slug"; current: string };
+
+  /**
+   * Color — `color`
+   *
+   * A color to color-code this person by.
+   */
+  color: Color;
 }
 
 export type EditorText = Array<SanityKeyed<SanityBlock>>;
@@ -300,7 +360,14 @@ export type Seo = {
   };
 };
 
-export type Documents = SiteSettings | SiteFooter | Year | Memory | Room;
+export type Documents =
+  | SiteSettings
+  | SiteFooter
+  | Year
+  | Memory
+  | Room
+  | Person
+  | Place;
 
 /**
  * This interface is a stub. It was referenced in your sanity schema but
@@ -308,3 +375,10 @@ export type Documents = SiteSettings | SiteFooter | Year | Memory | Room;
  * sanity-codegen will let you type this explicity.
  */
 type RichDate = any;
+
+/**
+ * This interface is a stub. It was referenced in your sanity schema but
+ * the definition was not actually found. Future versions of
+ * sanity-codegen will let you type this explicity.
+ */
+type Color = any;

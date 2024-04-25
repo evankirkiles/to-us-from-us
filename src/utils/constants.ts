@@ -21,6 +21,5 @@ export function isAuthenticated({
     runtime: { env },
   },
 }: Pick<AstroGlobal, "cookies" | "locals">) {
-  console.log(env.AUTH_SECRET);
   return cookies.get(AUTH_COOKIE)?.value === env.AUTH_SECRET;
 }
