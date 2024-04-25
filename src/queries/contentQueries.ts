@@ -97,6 +97,10 @@ export const slugsFor = (type: string) => async () => {
   return slugs.map(({ slug }: { slug: string }) => ({ params: { slug } }));
 };
 
+/* -------------------------------------------------------------------------- */
+/*                              Top-level Queries                             */
+/* -------------------------------------------------------------------------- */
+
 export const yearsQuery = t<Year[]>(groq`
 *[_type == "year"] | order(year asc) {
   _type,
